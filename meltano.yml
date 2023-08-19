@@ -5,3 +5,27 @@ environments:
 - name: dev
 - name: staging
 - name: prod
+plugins:
+  extractors:
+  - name: tap-spreadsheets-anywhere
+    variant: ets
+    pip_url: git+https://github.com/ets/tap-spreadsheets-anywhere.git
+  - name: tap-liti
+    inherit_from: tap-spreadsheets-anywhere
+    config:
+      tables:
+      - path: s3://felippe-data
+        name: liti_scale
+        pattern: raw/liti/.*scale.*csv
+        start_date: '2000-01-01T00:00:00Z'
+        key_properties: 
+        - _id
+        format: csv
+  loaders:
+  - name: target-duckdb
+    variant: jwills
+    pip_url: target-duckdb~=0.6
+    config:
+      path: 'md:'
+      dbname: health
+      default_target_schema: raw
