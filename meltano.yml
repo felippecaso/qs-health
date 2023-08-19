@@ -18,13 +18,21 @@ plugins:
         name: liti_scale
         pattern: raw/liti/.*scale.*csv
         start_date: '2000-01-01T00:00:00Z'
-        key_properties: 
+        key_properties:
         - _id
         format: csv
+  - name: tap-applehealth
+    namespace: tap_applehealth
+    pip_url: git+https://github.com/felippecaso/tap-applehealth.git
+    config:
+      file_path: s3://felippe-data/raw/apple-health/export.xml
+      stream_maps:
+        workouts:
+          __alias__: applehealth_workouts
   loaders:
   - name: target-duckdb
     variant: jwills
-    pip_url: target-duckdb~=0.6
+    pip_url: -e /Users/felippe.felisola/target-duckdb
     config:
       path: 'md:'
       dbname: health
