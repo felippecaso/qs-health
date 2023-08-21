@@ -23,16 +23,19 @@ plugins:
         format: csv
   - name: tap-applehealth
     namespace: tap_applehealth
-    pip_url: git+https://github.com/felippecaso/tap-applehealth.git
+    pip_url: tap-applehealth
     config:
       file_path: s3://felippe-data/raw/apple-health/export.xml
       stream_maps:
         workouts:
           __alias__: applehealth_workouts
+          id: md5(config['hash_seed'] + id)
+      stream_map_config:
+        hash_seed: 01AWZh7A6DzGm6iJZZ2T
   loaders:
   - name: target-duckdb
     variant: jwills
-    pip_url: -e /Users/felippe.felisola/target-duckdb
+    pip_url: target-duckdb~=0.6
     config:
       path: 'md:'
       dbname: health
