@@ -1,6 +1,6 @@
 # qs-health
 
-A "Quantified Self" project for Health-related data, using the Modern Data Stack.
+A Quantified Self project for health data using the Modern Data Stack.
 
 ## Installation
 
