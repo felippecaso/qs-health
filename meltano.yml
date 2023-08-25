@@ -40,3 +40,8 @@ plugins:
       path: 'md:'
       dbname: health
       default_target_schema: raw
+jobs:
+- name: load-sources-to-duckdb
+  tasks:
+  - tap-applehealth target-duckdb
+  - tap-liti target-duckdb
